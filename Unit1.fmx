@@ -1,0 +1,98 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object ListView1: TListView
+    ItemAppearanceClassName = 'TImageListItemRightButtonAppearance'
+    ItemEditAppearanceClassName = 'TImageListItemRightButtonDeleteAppearance'
+    HeaderAppearanceClassName = 'TListHeaderObjects'
+    FooterAppearanceClassName = 'TListHeaderObjects'
+    Position.X = 24.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 321.000000000000000000
+    Size.Height = 441.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    ItemAppearanceObjects.ItemObjects.TextButton.ButtonType = Delete
+    ItemAppearanceObjects.ItemObjects.TextButton.Text = 'Delete'
+    ItemAppearanceObjects.ItemObjects.Image.Visible = False
+    OnItemClick = ListView1ItemClick
+    OnButtonClick = ListView1ButtonClick
+  end
+  object Label1: TLabel
+    Position.X = 424.000000000000000000
+    Position.Y = 160.000000000000000000
+    TextSettings.Trimming = None
+    Text = 'Label1'
+    TabOrder = 6
+  end
+  object FDMemTable1: TFDMemTable
+    Indexes = <
+      item
+        Active = True
+        Selected = True
+        Name = 'IndexPK'
+        Fields = 'Index'
+        Options = [soPrimary]
+      end>
+    IndexName = 'IndexPK'
+    AggregatesActive = True
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 416
+    Top = 64
+    object FDMemTable1Index: TIntegerField
+      FieldName = 'Index'
+    end
+    object FDMemTable1Description: TStringField
+      FieldName = 'Description'
+      Size = 40
+    end
+    object FDMemTable1Total: TAggregateField
+      FieldName = 'Total'
+      Active = True
+      DisplayName = ''
+      Expression = 'SUM(Index)'
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = FDMemTable1
+    ScopeMappings = <>
+    Left = 304
+    Top = 224
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 500
+    Top = 29
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Liaisons rapides'
+      DataSource = BindSourceDB1
+      FieldName = 'Description'
+      Control = ListView1
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+    object LinkPropertyToFieldText: TLinkPropertyToField
+      Category = 'Liaisons rapides'
+      DataSource = BindSourceDB1
+      FieldName = 'Total'
+      Component = Label1
+      ComponentProperty = 'Text'
+    end
+  end
+end
